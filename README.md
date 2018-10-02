@@ -1,2 +1,2 @@
-# netty-websockets
+# Netty WebSockets
 WebSockets implementation using Netty
