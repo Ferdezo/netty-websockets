@@ -20,7 +20,10 @@ public class WebSocketHandshakeHandler extends SimpleChannelInboundHandler<HttpR
         if (areWsHeaders(headers)) {
             log.info("Handshake requested!");
             handleHandshake(ctx, httpRequest);
+            return;
         }
+
+        ctx.fireChannelRead(httpRequest);
     }
 
     private boolean areWsHeaders(HttpHeaders headers) {
