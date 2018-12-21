@@ -1,5 +1,6 @@
 package pl.ferdezo.netty.config;
 
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.CloseWebSocketFrame;
@@ -8,6 +9,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
+@ChannelHandler.Sharable
 public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocketFrame> {
 
     @Override
