@@ -7,10 +7,11 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.log4j.Log4j2;
+import pl.ferdezo.netty.config.BaseChannelInitializer;
 
 import java.net.InetSocketAddress;
 
-import static pl.ferdezo.netty.ServerConsts.*;
+import static pl.ferdezo.netty.consts.ServerConsts.*;
 
 @Log4j2
 public class WebSocketServer {
@@ -27,7 +28,7 @@ public class WebSocketServer {
                 .group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel.class)
                 .handler(new LoggingHandler(LogLevel.INFO))
-                .childHandler(new NettyServerInitializer());
+                .childHandler(new BaseChannelInitializer());
 
             serverBootstrap
                 .bind( new InetSocketAddress(NETTY_HOST, NETTY_PORT))

@@ -1,4 +1,4 @@
-package pl.ferdezo.netty;
+package pl.ferdezo.netty.consts;
 
 public final class ServerConsts {
     public static final String CONTENT_TYPE_HEADER = "Content-Type";

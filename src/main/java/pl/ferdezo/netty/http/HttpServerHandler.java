@@ -1,4 +1,4 @@
-package pl.ferdezo.netty;
+package pl.ferdezo.netty.http;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
@@ -9,7 +9,7 @@ import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
 import lombok.extern.log4j.Log4j2;
 
-import static pl.ferdezo.netty.ServerConsts.*;
+import static pl.ferdezo.netty.consts.ServerConsts.*;
 
 @Log4j2
 public class HttpServerHandler extends SimpleChannelInboundHandler<HttpRequest> {

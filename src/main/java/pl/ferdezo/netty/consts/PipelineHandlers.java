@@ -1,4 +1,4 @@
-package pl.ferdezo.netty;
+package pl.ferdezo.netty.consts;
 
 import lombok.RequiredArgsConstructor;
 
