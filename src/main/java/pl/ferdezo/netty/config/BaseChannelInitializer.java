@@ -6,14 +6,14 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpServerCodec;
 import pl.ferdezo.netty.http.HttpServerHandler;
 
-import static pl.ferdezo.netty.consts.PipelineHandlers.HTTP_HANDLER;
-import static pl.ferdezo.netty.consts.PipelineHandlers.HTTP_SERVER_CODEC;
+import static pl.ferdezo.netty.consts.PipelineHandlers.*;
 
 public class BaseChannelInitializer extends ChannelInitializer<SocketChannel> {
 
     protected void initChannel(SocketChannel socketChannel) {
         final ChannelPipeline pipeline = socketChannel.pipeline();
         pipeline.addLast(HTTP_SERVER_CODEC.key(), new HttpServerCodec());
+        pipeline.addLast(WS_HANDSHAKE_HANDLER.key(), new WebSocketHandshakeHandler());
         pipeline.addLast(HTTP_HANDLER.key(), new HttpServerHandler());
     }
 }
