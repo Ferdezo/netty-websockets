@@ -1,5 +1,6 @@
 package pl.ferdezo.netty.config;
 
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.HttpHeaderNames;
@@ -12,6 +13,7 @@ import lombok.extern.log4j.Log4j2;
 import static pl.ferdezo.netty.consts.PipelineHandlers.WS_FRAME_HANDLER;
 
 @Log4j2
+@ChannelHandler.Sharable
 public class WebSocketHandshakeHandler extends SimpleChannelInboundHandler<HttpRequest> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, HttpRequest httpRequest) {
