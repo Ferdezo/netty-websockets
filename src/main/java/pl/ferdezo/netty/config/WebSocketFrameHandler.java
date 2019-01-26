@@ -44,9 +44,11 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
             }
 
             String operation = stringTokenizer.nextToken();
-            RequestHandler requestHandler = RequestHandlerFactory.create(operation);
+            log.debug("Operation {}", operation);
+            RequestHandler requestHandler = RequestHandlerFactory.create(operation, ctx.channel());
 
             String param = stringTokenizer.nextToken();
+            log.debug("Param: {}", param);
             String response = requestHandler.handleAndProduceResponse(param);
             ctx.writeAndFlush(new TextWebSocketFrame(response));
             return;

@@ -1,18 +1,21 @@
 package pl.ferdezo.netty.handlers;
 
+import io.netty.channel.Channel;
 import org.apache.commons.lang3.StringUtils;
 
-public class RequestHandlerFactory {
+public final class RequestHandlerFactory {
 
-    public static RequestHandler create(String message) {
+    public static RequestHandler create(String message, Channel channel) {
         if (StringUtils.startsWith(message, "SUBSCRIBE")) {
-            return new SubscribeRequestHandler();
+            return new SubscribeChannelRequestHandler(channel);
         }
 
         if (StringUtils.startsWith(message, "UNSUBSCRIBE")) {
-            return new UnsubscribeRequestHandler();
+            return new UnsubscribeChannelRequestHandler(channel);
         }
 
         throw new IllegalArgumentException("Unrecognized request: " + message);
     }
+
+    private RequestHandlerFactory() {}
 }
