@@ -25,17 +25,17 @@ public class WebSocketServer {
             final ServerBootstrap serverBootstrap = new ServerBootstrap();
 
             serverBootstrap
-                .group(bossGroup, workerGroup)
-                .channel(NioServerSocketChannel.class)
-                .handler(new LoggingHandler(LogLevel.INFO))
-                .childHandler(new BaseChannelInitializer());
+                    .group(bossGroup, workerGroup)
+                    .channel(NioServerSocketChannel.class)
+                    .handler(new LoggingHandler(LogLevel.INFO))
+                    .childHandler(new BaseChannelInitializer());
 
             serverBootstrap
-                .bind( new InetSocketAddress(NETTY_HOST, NETTY_PORT))
-                .sync()
-                .channel()
-                .closeFuture()
-                .sync(); // block
+                    .bind(new InetSocketAddress(NETTY_HOST, NETTY_PORT))
+                    .sync()
+                    .channel()
+                    .closeFuture()
+                    .sync(); // block
 
         } catch (InterruptedException e) {
             log.error("Netty Server thread interrupted error", e);

@@ -33,7 +33,7 @@ public class WebSocketHandshakeHandler extends SimpleChannelInboundHandler<HttpR
         final String upgrade = headers.get(HttpHeaderNames.UPGRADE);
 
         return connectionHeaders.contains("Upgrade") &&
-            "websocket".equalsIgnoreCase(upgrade);
+                "websocket".equalsIgnoreCase(upgrade);
     }
 
     private void handleHandshake(ChannelHandlerContext ctx, HttpRequest httpRequest) {

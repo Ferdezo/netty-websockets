@@ -14,6 +14,7 @@
         <log4j2.version>2.11.1</log4j2.version>
         <maven.compiler.source>10</maven.compiler.source>
         <maven.compiler.target>10</maven.compiler.target>
+        <apapche.commons.version>1.6</apapche.commons.version>
     </properties>
 
     <dependencies>
@@ -22,6 +23,13 @@
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>${netty.version}</version>
+        </dependency>
+
+        <!-- Apache Commons-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>${apapche.commons.version}</version>
         </dependency>
 
         <!-- Lombok -->

@@ -60,7 +60,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<HttpRequest> 
                 HttpResponseStatus.BAD_REQUEST);
 
         ctx
-            .writeAndFlush(badRequestResponse)
-            .addListener(ChannelFutureListener.CLOSE);
+                .writeAndFlush(badRequestResponse)
+                .addListener(ChannelFutureListener.CLOSE);
     }
 }
