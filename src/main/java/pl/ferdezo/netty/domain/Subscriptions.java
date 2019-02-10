@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
@@ -45,5 +46,13 @@ public final class Subscriptions {
             .ofNullable(subscriptions.get(channelGroupName))
             .orElseThrow(IllegalArgumentException::new)
             .add(channel);
+    }
+
+    public static Set<String> getSubscribedChannels() {
+        return subscriptions.keySet();
+    }
+
+    public static ChannelGroup getSubscribersForChannel(String channelName) {
+        return subscriptions.get(channelName);
     }
 }
