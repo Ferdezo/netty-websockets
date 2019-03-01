@@ -9,5 +9,5 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Getter
 public class ReadOnlySubscriptions {
-    private final  Map<String, ChannelGroup> subcriptions;
+    private final Map<String, ChannelGroup> subcriptions;
 }

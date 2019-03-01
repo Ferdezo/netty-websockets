@@ -8,6 +8,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
 import lombok.extern.log4j.Log4j2;
+import pl.ferdezo.netty.domain.match.MatchEventSimulator;
 
 import static pl.ferdezo.netty.consts.ServerConsts.*;
 
@@ -17,12 +18,18 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<HttpRequest> 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, HttpRequest httpRequest) {
         final HttpMethod httpMethod = httpRequest.method();
+        final String uri = httpRequest.uri();
+
+        if (HttpMethod.POST.equals(httpMethod) && SIMULATE_URI.equals(uri)) {
+            new MatchEventSimulator().simulate();
+            return;
+        }
+
         if (!HttpMethod.GET.equals(httpMethod)) {
             sendBadRequest(ctx);
             return;
         }
 
-        final String uri = httpRequest.uri();
         if (HELLO_URI.equals(uri)) {
             final HttpResponse response = preparePositiveResponse("hello");
             final ChannelFuture writeFuture = ctx.write(response);

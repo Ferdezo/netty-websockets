@@ -25,9 +25,9 @@ public final class Subscriptions {
     public static void subscribe(String channelGroupName, Channel channel) {
         log.debug("Registering channel: {} into channel group: {}", channel, channelGroupName);
 
-        Consumer<ChannelGroup> subscribeToChannelGroup = channelGroup -> channelGroup.add(channel);
+        final Consumer<ChannelGroup> subscribeToChannelGroup = channelGroup -> channelGroup.add(channel);
 
-        Runnable subscribeToNewChannelGroup = () -> {
+        final Runnable subscribeToNewChannelGroup = () -> {
             DefaultChannelGroup newChannelGroup = new DefaultChannelGroup(channelGroupName, GlobalEventExecutor.INSTANCE);
             newChannelGroup.add(channel);
             subscriptions.put(channelGroupName, newChannelGroup);

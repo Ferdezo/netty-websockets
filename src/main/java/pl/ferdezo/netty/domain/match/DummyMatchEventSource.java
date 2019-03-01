@@ -8,11 +8,11 @@ public class DummyMatchEventSource implements MatchEventSource {
         "goal", "yellow card", "red card", "penalty", "foul", "corner", "free kick");
 
     @Override
-    public String getMatchevent() {
-        return randonMatchEvent();
+    public String getMatchEvent() {
+        return randomMatchEvent();
     }
 
-    private String randonMatchEvent() {
+    private String randomMatchEvent() {
         int randomIndex = new Random().nextInt(matchEvents.size());
         return matchEvents.get(randomIndex);
     }

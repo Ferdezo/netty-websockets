@@ -10,7 +10,6 @@ import java.util.function.Predicate;
 
 @Log4j2
 public class MatchEventSimulator {
-
     private final MatchEventSource matchEventSource = new DummyMatchEventSource();
 
     public void simulate() {
@@ -26,7 +25,7 @@ public class MatchEventSimulator {
     }
 
     private void sendMatchEvent(ChannelGroup channelGroup) {
-        final String matchEvent = matchEventSource.getMatchevent();
+        final String matchEvent = matchEventSource.getMatchEvent();
         log.info("Sending match event: {} to {}", matchEvent, channelGroup.name());
         channelGroup.writeAndFlush(new TextWebSocketFrame(matchEvent));
     }

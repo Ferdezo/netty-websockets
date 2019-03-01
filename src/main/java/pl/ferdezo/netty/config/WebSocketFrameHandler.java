@@ -17,7 +17,7 @@ import java.util.StringTokenizer;
 @ChannelHandler.Sharable
 public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocketFrame> {
 
-    public static final String DELIMETER = "_";
+    public static final String DELIMITER = "_";
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, WebSocketFrame frame) throws Exception {
@@ -36,7 +36,7 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
         if (frame instanceof TextWebSocketFrame) {
             String text = ((TextWebSocketFrame) frame).text();
             log.debug("Text WS frame: {}", text);
-            StringTokenizer stringTokenizer = new StringTokenizer(text, DELIMETER);
+            StringTokenizer stringTokenizer = new StringTokenizer(text, DELIMITER);
 
             if (stringTokenizer.countTokens() != 2) {
                 ctx.writeAndFlush(new TextWebSocketFrame("Not enought parameters"));
