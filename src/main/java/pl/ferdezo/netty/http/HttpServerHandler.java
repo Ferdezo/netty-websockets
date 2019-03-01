@@ -17,11 +17,22 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<HttpRequest> 
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, HttpRequest httpRequest) {
+        log.info("Http Request!");
         final HttpMethod httpMethod = httpRequest.method();
         final String uri = httpRequest.uri();
 
         if (HttpMethod.POST.equals(httpMethod) && SIMULATE_URI.equals(uri)) {
             new MatchEventSimulator().simulate();
+
+            final DefaultHttpResponse acceptedResponse = new DefaultHttpResponse(
+                HttpVersion.HTTP_1_1,
+                HttpResponseStatus.ACCEPTED
+            );
+
+            ctx
+                .writeAndFlush(acceptedResponse)
+                .addListener(ChannelFutureListener.CLOSE);
+
             return;
         }
 
@@ -43,7 +54,6 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<HttpRequest> 
         }
 
         sendBadRequest(ctx);
-
     }
 
     private HttpResponse preparePositiveResponse(String message) {

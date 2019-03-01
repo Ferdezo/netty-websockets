@@ -12,6 +12,12 @@ public final class ServerConsts {
     public static final int BOSS_THREADS = 1;
     public static final String NETTY_HOST = "localhost";
 
+    public static final String UPGRADE_CONNECTION = "Upgrade";
+    public static final String WEBSOCKET_UPGRADE = "websocket";
+    public static final String HOST_HEADER = "Host";
+    public static final String SUBSCRIBE = "SUBSCRIBE";
+    public static final String UNSUBSCRIBE = "UNSUBSCRIBE";
+
     private ServerConsts() {
     }
 }

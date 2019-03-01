@@ -38,14 +38,13 @@ public final class Subscriptions {
             .ifPresentOrElse(
                 subscribeToChannelGroup,
                 subscribeToNewChannelGroup);
-
     }
 
     public static void unsubscribe(String channelGroupName, Channel channel) {
         Optional
             .ofNullable(subscriptions.get(channelGroupName))
             .orElseThrow(IllegalArgumentException::new)
-            .add(channel);
+            .remove(channel);
     }
 
     public static Set<String> getSubscribedChannels() {

@@ -27,6 +27,6 @@ public class MatchEventSimulator {
     private void sendMatchEvent(ChannelGroup channelGroup) {
         final String matchEvent = matchEventSource.getMatchEvent();
         log.info("Sending match event: {} to {}", matchEvent, channelGroup.name());
-        channelGroup.writeAndFlush(new TextWebSocketFrame(matchEvent));
+        channelGroup.writeAndFlush(new TextWebSocketFrame(channelGroup.name() + " : " + matchEvent));
     }
 }
