@@ -41,6 +41,10 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<HttpRequest> 
             return;
         }
 
+        if (BROKEN_URI.equals(uri)) {
+            throw new IllegalArgumentException("Broken endpoint");
+        }
+
         if (HELLO_URI.equals(uri)) {
             final HttpResponse response = preparePositiveResponse("hello");
             final ChannelFuture writeFuture = ctx.write(response);
@@ -53,6 +57,12 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<HttpRequest> 
             return;
         }
 
+        sendBadRequest(ctx);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        log.error("Exception was caught!", cause);
         sendBadRequest(ctx);
     }
 
