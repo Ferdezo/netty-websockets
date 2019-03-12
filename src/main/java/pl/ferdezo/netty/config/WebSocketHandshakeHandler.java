@@ -37,7 +37,6 @@ public class WebSocketHandshakeHandler extends SimpleChannelInboundHandler<HttpR
     }
 
     private void handleHandshake(ChannelHandlerContext ctx, HttpRequest httpRequest) {
-        log.debug("Handhake!");
         ctx.pipeline().replace(this, WS_FRAME_HANDLER.key(), new WebSocketFrameHandler());
 
         final String wsUrl = prepareWsUrl(httpRequest);
@@ -49,7 +48,8 @@ public class WebSocketHandshakeHandler extends SimpleChannelInboundHandler<HttpR
             return;
         }
 
-        handshaker.handshake(ctx.channel(), httpRequest);
+        handshaker.handshake(ctx.channel(), httpRequest)
+            .addListener(future -> log.info("HANDSHAKE"));
     }
 
     private String prepareWsUrl(HttpRequest httpRequest) {
