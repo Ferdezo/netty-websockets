@@ -34,20 +34,20 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
         }
 
         if (frame instanceof TextWebSocketFrame) {
-            String text = ((TextWebSocketFrame) frame).text();
+            final String text = ((TextWebSocketFrame) frame).text();
             log.debug("Text WS frame: {}", text);
-            StringTokenizer stringTokenizer = new StringTokenizer(text, DELIMETER);
+            final StringTokenizer stringTokenizer = new StringTokenizer(text, DELIMETER);
 
             if (stringTokenizer.countTokens() != 2) {
                 ctx.writeAndFlush(new TextWebSocketFrame("Not enought parameters"));
                 return;
             }
 
-            String operation = stringTokenizer.nextToken();
-            RequestHandler requestHandler = RequestHandlerFactory.create(operation);
+            final String operation = stringTokenizer.nextToken();
+            final RequestHandler requestHandler = RequestHandlerFactory.create(operation);
 
-            String param = stringTokenizer.nextToken();
-            String response = requestHandler.handleAndProduceResponse(param);
+            final String param = stringTokenizer.nextToken();
+            final String response = requestHandler.handleAndProduceResponse(param);
             ctx.writeAndFlush(new TextWebSocketFrame(response));
             return;
         }
@@ -57,7 +57,7 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
 
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         log.error("Excetion while handling WebSocketFrame", cause);
 
         if (cause instanceof IllegalArgumentException) {
