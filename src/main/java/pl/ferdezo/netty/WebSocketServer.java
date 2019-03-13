@@ -19,7 +19,7 @@ public class WebSocketServer {
     public static void main(String[] args) {
         final EventLoopGroup bossGroup = new NioEventLoopGroup(BOSS_THREADS);
         final EventLoopGroup workerGroup = new NioEventLoopGroup();
-        log.info("Server started");
+        log.info("Server starting");
 
         try {
             final ServerBootstrap serverBootstrap = new ServerBootstrap();
