@@ -36,7 +36,7 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
         if (frame instanceof TextWebSocketFrame) {
             final String text = ((TextWebSocketFrame) frame).text();
             log.debug("Text WS frame: {}", text);
-            final StringTokenizer stringTokenizer = new StringTokenizer(text, DELIMETER);
+            final StringTokenizer stringTokenizer = new StringTokenizer(text, DELIMITER);
 
             if (stringTokenizer.countTokens() != 2) {
                 ctx.writeAndFlush(new TextWebSocketFrame("Not enought parameters"));
@@ -44,7 +44,7 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
             }
 
             final String operation = stringTokenizer.nextToken();
-            final RequestHandler requestHandler = RequestHandlerFactory.create(operation);
+            final RequestHandler requestHandler = RequestHandlerFactory.create(operation, ctx.channel());
 
             final String param = stringTokenizer.nextToken();
             final String response = requestHandler.handleAndProduceResponse(param);
