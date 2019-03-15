@@ -1,0 +1,97 @@
+<html>
+<head>
+    <title>Web Socket Test</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<script type="text/javascript">
+    let socket;
+    if (!window.WebSocket) {
+        window.WebSocket = window.MozWebSocket;
+    }
+
+    if (window.WebSocket) {
+        socket = new WebSocket("ws://localhost:9000");
+
+        socket.onpong = event => {
+            ta = document.getElementById('responseText');
+            ta.value = "<<< PONG " + event;
+        }
+
+        socket.onmessage = event => {
+            let ta = document.getElementById('responseText');
+            ta.value = ta.value + '\n' + event.data
+        };
+        socket.onopen = event => {
+            let ta = document.getElementById('responseText');
+            ta.value = "Web Socket opened!";
+        };
+        socket.onclose = event => {
+            let ta = document.getElementById('responseText');
+            ta.value = ta.value + "\nWeb Socket closed!";
+        };
+    } else {
+        alert("Your browser does not support Web Socket.");
+    }
+
+    function send(message) {
+        if (!window.WebSocket) {
+            return;
+        }
+
+        if (socket.readyState !== WebSocket.OPEN) {
+            alert("The socket is not open.");
+            return;
+        }
+
+        socket.send(message);
+    }
+
+    function subscribe() {
+        const toSubscribe = document.getElementById('subElement').value;
+        send("SUBSCRIBE_" + toSubscribe);
+    }
+
+    function unsubscribe() {
+        const toUnsubscribe = document.getElementById('subElement').value;
+        send("UNSUBSCRIBE_" + toUnsubscribe);
+    }
+
+    // test method
+    function subscribeAll() {
+        send("SUB_ALL");
+    }
+
+    function unsubscribeAll() {
+        send("UNSUB_ALL");
+    }
+
+    function renewConnection() {
+        socket = new WebSocket("ws://localhost:9000");
+    }
+
+</script>
+<form onsubmit="return false;">
+    <input type="button"
+           value="Subscribe"
+           onclick="subscribe()"/>
+
+    <input type="button"
+           value="Unsubscribe"
+           onclick="unsubscribe()"/>
+
+    <input type="button"
+           value="Subscribe All"
+           onclick="subscribeAll()"/>
+
+    <input type="button"
+           value="Unsubscribe All"
+           onclick="unsubscribeAll()"/>
+    <br/>
+    <input type="text" id="subElement"/>
+
+    <h3>Output</h3>
+    <textarea id="responseText" style="width:500px;height:500px;"></textarea>
+</form>
+</body>
+</html>
