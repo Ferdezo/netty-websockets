@@ -1,7 +1,9 @@
 package pl.ferdezo.netty.handlers;
 
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
+@UtilityClass
 public class RequestHandlerFactory {
 
     public static RequestHandler create(String message) {
