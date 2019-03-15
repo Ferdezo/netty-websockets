@@ -1,5 +1,6 @@
 package pl.ferdezo.netty.http;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -46,7 +47,8 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<HttpRequest> 
         }
 
         if (HELLO_URI.equals(uri)) {
-            final HttpResponse response = preparePositiveResponse("hello");
+            ByteBuf messageBuf = Unpooled.copiedBuffer("hello", CharsetUtil.UTF_8);
+            final HttpResponse response = preparePositiveResponse(messageBuf);
             final ChannelFuture writeFuture = ctx.write(response);
 
             if (!HttpUtil.isKeepAlive(httpRequest)) {
@@ -54,6 +56,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<HttpRequest> 
             }
 
             ctx.flush();
+            log.debug("Message buf refCnt: {}", messageBuf.refCnt());
             return;
         }
 
@@ -66,9 +69,9 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<HttpRequest> 
         sendBadRequest(ctx);
     }
 
-    private HttpResponse preparePositiveResponse(String message) {
+    private HttpResponse preparePositiveResponse(ByteBuf messageBuf) {
         final HttpContent content = new DefaultHttpContent(
-                Unpooled.copiedBuffer(message, CharsetUtil.UTF_8));
+                messageBuf);
 
         final HttpResponse response = new DefaultFullHttpResponse(
                 HttpVersion.HTTP_1_1,
@@ -78,6 +81,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<HttpRequest> 
         final HttpHeaders headers = response.headers();
         headers.add(CONTENT_TYPE_HEADER, CONTENT_TYPE_VALUE);
         headers.set(CONTENT_LENGTH_HEADER, content.content().readableBytes());
+        log.debug("Message buf refCnt: {}", messageBuf.refCnt());
         return response;
     }
 
